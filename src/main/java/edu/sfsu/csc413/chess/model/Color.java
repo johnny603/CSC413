@@ -28,7 +28,10 @@ public enum Color {
      * White moves up the board (+1), black moves down (-1).
      */
     public int pawnDirection() {
-        throw new UnsupportedOperationException("M0b: your turn");
+        if (this == WHITE) {
+            return 1;
+        }
+        return -1;
     }
 
     /** The rank pawns of this color start on (0-based). */
