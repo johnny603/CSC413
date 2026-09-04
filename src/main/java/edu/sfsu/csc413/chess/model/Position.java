@@ -10,7 +10,7 @@ public record Position(int file, int rank) {
         return file >= 0 && file < BOARD_SIZE && rank >= 0 && rank < BOARD_SIZE;
     }
 
-    // fixed contract signatures
+    // fixed contract signatures for parse and offsetOrNull
     public static Position parse(String algebraic) {
         // Check length
         if (algebraic.length() != 2) {
@@ -30,7 +30,9 @@ public record Position(int file, int rank) {
         return new Position(parsedFile, parsedRank);
     }
 
+
     public Position offsetOrNull(int fileDelta, int rankDelta) {
+        // Use guard clauses for fail fast
         if (!(fileDelta >= 0 && fileDelta < BOARD_SIZE)) {
             return null;
         }

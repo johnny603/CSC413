@@ -15,8 +15,12 @@ public enum Color {
     BLACK;
 
     /** The side whose turn it is after this one moves. */
+    // if White then return Black, otherwise return white
     public Color opposite() {
-        throw new UnsupportedOperationException("M0b: your turn");
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
     }
 
     /**
