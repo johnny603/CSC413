@@ -36,11 +36,19 @@ public enum Color {
 
     /** The rank pawns of this color start on (0-based). */
     public int pawnStartRank() {
-        throw new UnsupportedOperationException("M0b: your turn");
+        // White starts at rank 1; Black starts at rank -1
+        if (this == WHITE) {
+            return 1;
+        }
+        return 6;
     }
 
     /** The rank a pawn of this color must reach to promote (0-based). */
     public int promotionRank() {
-        throw new UnsupportedOperationException("M0b: your turn");
+        // each must reach an end of the board
+        if (this == WHITE) {
+            return 7;
+        }
+        return 0;
     }
 }
