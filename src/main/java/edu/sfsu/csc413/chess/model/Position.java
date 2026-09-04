@@ -31,7 +31,13 @@ public record Position(int file, int rank) {
     }
 
     public Position offsetOrNull(int fileDelta, int rankDelta) {
-        throw new UnsupportedOperationException("M0b: your turn");
+        if (!(fileDelta >= 0 && fileDelta < BOARD_SIZE)) {
+            return null;
+        }
+        if (!(rankDelta >= 0 && rankDelta < BOARD_SIZE)) {
+            return null;
+        }
+        return new Position(fileDelta, rankDelta);
     }
 
     // compact constructor
