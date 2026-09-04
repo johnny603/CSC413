@@ -12,7 +12,22 @@ public record Position(int file, int rank) {
 
     // fixed contract signatures
     public static Position parse(String algebraic) {
-        throw new UnsupportedOperationException("M0b: your turn");
+        // Check length
+        if (algebraic.length() != 2) {
+            throw new IllegalArgumentException("String must be of length 2");
+        }
+        // Check format
+        if (!Character.isDigit(algebraic.charAt(1))) {
+            throw new IllegalArgumentException("Second character must be a digit");
+        }
+        if (!Character.isLowerCase(algebraic.charAt(0))) {
+            throw new IllegalArgumentException("First character must be a lower case letter");
+        }
+        // Parse to zero based coordinates
+        // Java represents characters as numeric Unicode values
+        int parsedFile = algebraic.charAt(0) - 'a';
+        int parsedRank = algebraic.charAt(1) - '1';
+        return new Position(parsedFile, parsedRank);
     }
 
     public Position offsetOrNull(int fileDelta, int rankDelta) {
