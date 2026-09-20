@@ -2,69 +2,50 @@ package edu.sfsu.csc413.chess.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
 // A board HAS 64 tiles [8 * 8]
 public class Board {
     private final Piece[][] squares =
             new Piece[Position.BOARD_SIZE][Position.BOARD_SIZE];
 
-
-    // an empty board based on BoardTest
+    // An empty board based on BoardTest
     public Board() {
-        for (int file = 0; file < Position.BOARD_SIZE; file++) {
-            for (int rank = 0; rank < Position.BOARD_SIZE; rank++) {
-                squares[file][rank] = null;
-            }
-        }
     }
 
-    // what is here? null if nothing
+    // What is here? null if nothing
     public Piece pieceAt(Position position) {
-        // map the piece to the square
-        int file = position.file();
-        int rank = position.rank();
-        return squares[file][rank];
+        return squares[position.file()][position.rank()];
     }
 
-    // convenience
+    // Convenience
     public boolean isEmpty(Position position) {
-        // relate to pieceAt and check if the square has nothing in it
-        int file = position.file();
-        int rank = position.rank();
-        return squares[file][rank] == null;
+        return pieceAt(position) == null;
     }
 
-
-    // put this here (null clears)
+    // Put this here (null clears)
     public void place(Position position, Piece piece) {
-        // store the piece in the array
-        int file = position.file();
-        int rank = position.rank();
-        squares[file][rank] = piece;
+        squares[position.file()][position.rank()] = piece;
     }
 
-
-    // where are all of white's pieces?
+    // Where are all of the specified color's pieces?
     public List<Position> positionsOf(Color color) {
         List<Position> positions = new ArrayList<>();
+
         for (int file = 0; file < Position.BOARD_SIZE; file++) {
             for (int rank = 0; rank < Position.BOARD_SIZE; rank++) {
                 Piece piece = squares[file][rank];
-                if (piece != null) {
-                    // Piece.color is private
-                    if (piece.color() == color) {
-                        Position newPosition = new Position(file, rank);
-                        positions.add(newPosition);
-                    }
+                // avoid nested if statements
+                if (piece != null && piece.color() == color) {
+                    positions.add(new Position(file, rank));
                 }
             }
         }
+
         return positions;
     }
 
-
-    // one-line dump, for debugging
-    @Override public String toString() {
+    // One-line dump, for debugging
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         int emptyCount = 0;
 
@@ -96,8 +77,7 @@ public class Board {
                 sb.append("/");
             }
         }
+
         return sb.toString();
     }
-
-
 }
