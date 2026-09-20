@@ -23,12 +23,15 @@ public enum PieceType {
     // fromSymbol()
     /** The inverse: the type for a letter, in either case. Throws if it names no piece. */
     public static PieceType fromSymbol(char letter) {
+        letter = Character.toUpperCase(letter);
+
         for (PieceType type : values()) {
             if (type.symbol == letter) {
                 return type;
             }
         }
-        return null;
+
+        throw new IllegalArgumentException("Unknown piece symbol: " + letter);
     }
 }
 
