@@ -1,5 +1,6 @@
 package edu.sfsu.csc413.chess.model;
 
+import edu.sfsu.csc413.chess.factory.PieceFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * The board stores which piece is on which square. That is the whole
  * specification, and every test here is a consequence of it.
+ *
+ * <p>At M1 the helper below said {@code new Piece(color, type)}; from M2 on
+ * it goes through the factory, because {@code Piece} is abstract.
  */
 class BoardTest {
 
     /** The one line in this file that knows how a piece is constructed. */
     private static Piece piece(Color color, PieceType type) {
-        return new Piece(color, type);
+        return PieceFactory.create(type, color);
     }
 
     @Test
