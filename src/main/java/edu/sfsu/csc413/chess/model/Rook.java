@@ -18,6 +18,7 @@ public class Rook extends Piece {
 
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
-        throw new UnsupportedOperationException("M2: implement Rook.pseudoLegalMoves");
+        // Rook can "slide" in 4 directions listed
+        return slidingMoves(board, from, DIRECTIONS);
     }
 }
