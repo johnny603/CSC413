@@ -25,6 +25,7 @@ public class King extends Piece {
 
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
-        throw new UnsupportedOperationException("M2: implement King.pseudoLegalMoves");
+        // King "steps" in one direction
+        return steppingMoves(board, from, OFFSETS);
     }
 }
