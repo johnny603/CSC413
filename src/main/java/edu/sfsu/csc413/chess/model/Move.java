@@ -58,8 +58,13 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      * e.g. {@code "e2e4"} or {@code "e7e8q"} for a promotion.
      */
     @Override
-    // TODO: Consult Position class to help with this one
     public String toString() {
-        throw new UnsupportedOperationException("M2: implement Move.toString");
+        // where it left + where it landed
+        // consults the position method
+        String algebraic = from.toString() + to.toString();
+        if (isPromotion()) {
+            algebraic += Character.toLowerCase(promotesTo.symbol());
+        }
+        return algebraic;
     }
 }
