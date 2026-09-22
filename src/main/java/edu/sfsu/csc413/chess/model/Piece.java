@@ -1,6 +1,6 @@
 package edu.sfsu.csc413.chess.model;
 import java.util.List;
-
+import java.util.ArrayList;
 
 public abstract class Piece {
     // remember color first, subclasses depend on order
@@ -27,11 +27,43 @@ public abstract class Piece {
     }
 
     protected List<Move> slidingMoves(Board board, Position from, int[][] directions) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Move> moves = new ArrayList<>();
+        // consider each direction, not each square which takes up space and time
+        for (int[] direction : directions) {
+            // where a piece moved from
+            int fileFrom = from.file();
+            int rankFrom = from.rank();
+
+            // it CAN repeatedly move in a direction until a condition is met
+            while (true) {
+                fileFrom += direction[0];
+                rankFrom += direction[1];
+
+                if (!Position.isOnBoard(fileFrom, rankFrom)) {
+                    break;
+                }
+
+                // make a new position and check it on the board
+                Position target = new Position(fileFrom, rankFrom);
+                Piece targetPiece = board.pieceAt(target);
+
+                // check target
+                if (targetPiece == null) {
+                    moves.add(Move.quiet(from, target, this));
+                }
+                else if (targetPiece.color() != color()) {
+                    moves.add(Move.capture(from, target, this, targetPiece));
+                    break;
+                } else {
+                    break;
+                }
+            }
+        }
+        return moves;
     }
 
     protected List<Move> steppingMoves(Board board, Position from, int[][] offsets) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("M2: implement Piece.steppingMoves");
     }
 
     // accessors
