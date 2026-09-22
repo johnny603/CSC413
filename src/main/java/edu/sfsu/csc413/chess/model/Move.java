@@ -20,35 +20,37 @@ package edu.sfsu.csc413.chess.model;
  * @param captured    the piece removed by this move, or null for a quiet move
  * @param promotesTo  the type a pawn became, or null if this is not a promotion
  */
+
+// records are basically immutable data carriers
 public record Move(Position from, Position to, Piece moved, Piece captured, PieceType promotesTo) {
 
     /**
      * A move to an empty square.
      */
     public static Move quiet(Position from, Position to, Piece moved) {
-        throw new UnsupportedOperationException("M2: implement Move.quiet");
+        return new Move(from, to, moved, null, null);
     }
 
     /**
      * A move that removes an enemy piece from the destination square.
      */
     public static Move capture(Position from, Position to, Piece moved, Piece captured) {
-        throw new UnsupportedOperationException("M2: implement Move.capture");
+        return new Move(from, to, moved, captured, null);
     }
 
     /**
      * A pawn reaching the far rank and becoming {@code promotesTo}.
      */
     public static Move promotion(Position from, Position to, Piece moved, Piece captured, PieceType promotesTo) {
-        throw new UnsupportedOperationException("M2: implement Move.promotion");
+        return new Move(from, to, moved, captured, promotesTo);
     }
 
     public boolean isCapture() {
-        throw new UnsupportedOperationException("M2: implement Move.isCapture");
+        return captured != null;
     }
 
     public boolean isPromotion() {
-        throw new UnsupportedOperationException("M2: implement Move.isPromotion");
+        return promotesTo != null;
     }
 
     /**
@@ -56,6 +58,7 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      * e.g. {@code "e2e4"} or {@code "e7e8q"} for a promotion.
      */
     @Override
+    // TODO: Consult Position class to help with this one
     public String toString() {
         throw new UnsupportedOperationException("M2: implement Move.toString");
     }
