@@ -31,8 +31,37 @@ public class Pawn extends Piece {
 
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
-        throw new UnsupportedOperationException("M2: implement Pawn.pseudoLegalMoves");
-    }
+        List<Move> moves = new ArrayList<>();
+        // possible ways the Pawn can move
+        final int direction = color() == Color.WHITE ? 1 : -1;
+        final int oneStepRank = from.rank() + direction;
+        final int twoStepRank = from.rank() + direction * 2;
+        boolean onStartingRank = (color() == Color.WHITE && from.rank() == 1) || (color() == Color.BLACK && from.rank() == 6);
+        // make sure types match
+        Position oneStep = new Position(from.file(), oneStepRank);
+        Position twoStep = new Position(from.file(), twoStepRank);
+        // can only move one step ONCE
+        if (board.isEmpty(oneStep)) {
+            moves.add(Move.quiet(from, oneStep, this));
+            if (onStartingRank && board.isEmpty(twoStep)) {
+                moves.add(Move.quiet(from, twoStep, this));
+            }
+        }
+        // consider diagonal moves
+        for (int fileDelta : new int[] { -1, 1 }) {
+            int targetFile = from.file() + fileDelta;
+            int targetRank = from.rank() + direction;
+            if (!Position.isOnBoard(targetFile, targetRank)) {
+                continue;
+            }
+            Position target = new Position(targetFile, targetRank);
+            Piece targetPiece = board.pieceAt(target);
+            if (targetPiece != null && targetPiece.color() != color()) {
+                moves.add(Move.capture(from, target, this, targetPiece));
+            }
+        }
+        return moves;
+        }
 
     /**
      * A pawn attacks the two squares diagonally ahead of it, whether or not

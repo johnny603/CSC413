@@ -66,7 +66,7 @@ public abstract class Piece {
         for (int[] offset : offsets) {
             // get the starting point
             int fileFrom = from.file();
-            int rankFrom = from.file();
+            int rankFrom = from.rank();
 
             // target point, "steps"
             int fileTarget = fileFrom + offset[0];
