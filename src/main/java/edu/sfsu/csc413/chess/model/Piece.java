@@ -15,7 +15,7 @@ public abstract class Piece {
 
     public abstract List<Move> pseudoLegalMoves(Board board, Position from);
 
-    // Pawn would Override this as it attacks differently
+    // Pawn would Override this as it attacks and moves differently
     /** True if this piece could capture an enemy standing on {@code target}. */
     public boolean attacks(Board board, Position from, Position target) {
         for (Move move : pseudoLegalMoves(board, from)) {

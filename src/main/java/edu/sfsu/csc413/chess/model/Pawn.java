@@ -38,7 +38,8 @@ public class Pawn extends Piece {
         final int direction = color() == Color.WHITE ? 1 : -1;
         final int oneStepRank = from.rank() + direction;
         final int twoStepRank = from.rank() + direction * 2;
-        boolean onStartingRank = (color() == Color.WHITE && from.rank() == 1) || (color() == Color.BLACK && from.rank() == 6);
+        boolean onStartingRank = (color() == Color.WHITE && from.rank() == 1)
+                || (color() == Color.BLACK && from.rank() == 6);
 
         // make sure types match
         Position oneStep = new Position(from.file(), oneStepRank);
@@ -47,8 +48,10 @@ public class Pawn extends Piece {
         if (board.isEmpty(oneStep)) {
 
             // can promote via one step
-            boolean promotes = (color() == Color.WHITE && oneStep.rank() == 7) || (color() == Color.BLACK && oneStep.rank() == 0);
+            boolean promotes = (color() == Color.WHITE && oneStep.rank() == 7) ||
+                    (color() == Color.BLACK && oneStep.rank() == 0);
 
+            // Use the given promotion choices
             if (promotes) {
                 for (PieceType promotion : PROMOTION_CHOICES) {
                     moves.add(Move.promotion(from, oneStep, this, null, promotion));
@@ -69,11 +72,15 @@ public class Pawn extends Piece {
         for (int fileDelta : new int[] { -1, 1 }) {
             int targetFile = from.file() + fileDelta;
             int targetRank = from.rank() + direction;
+
+            // check and create target
             if (!Position.isOnBoard(targetFile, targetRank)) {
                 continue;
             }
             Position target = new Position(targetFile, targetRank);
             Piece targetPiece = board.pieceAt(target);
+
+            // check target
             if (targetPiece != null && targetPiece.color() != color()) {
                 moves.add(Move.capture(from, target, this, targetPiece));
             }
