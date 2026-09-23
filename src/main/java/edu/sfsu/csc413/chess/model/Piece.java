@@ -38,16 +38,14 @@ public abstract class Piece {
             while (true) {
                 fileFrom += direction[0];
                 rankFrom += direction[1];
-
+                // positions are available
                 if (!Position.isOnBoard(fileFrom, rankFrom)) {
                     break;
                 }
-
                 // make a new position and check it on the board
                 Position target = new Position(fileFrom, rankFrom);
                 Piece targetPiece = board.pieceAt(target);
-
-                // check target
+                // check target point
                 if (targetPiece == null) {
                     moves.add(Move.quiet(from, target, this));
                 }
@@ -63,7 +61,30 @@ public abstract class Piece {
     }
 
     protected List<Move> steppingMoves(Board board, Position from, int[][] offsets) {
-        throw new UnsupportedOperationException("M2: implement Piece.steppingMoves");
+        List<Move> moves = new ArrayList<>();
+        // for each offset
+        for (int[] offset : offsets) {
+            // get the starting point
+            int fileFrom = from.file();
+            int rankFrom = from.file();
+
+            // target point, "steps"
+            int fileTarget = fileFrom + offset[0];
+            int rankTarget = rankFrom + offset[1];
+            // positions are available
+            if (!Position.isOnBoard(fileTarget, rankTarget)) {
+                continue;
+            }
+            // check target point
+            Position target = new Position(fileTarget, rankTarget);
+            Piece targetPiece = board.pieceAt(target);
+            if (targetPiece == null) {
+                moves.add(Move.quiet(from, target, this));
+            } else if (targetPiece.color() != color()) {
+                moves.add(Move.capture(from, target, this, targetPiece));
+            }
+        }
+        return moves;
     }
 
     // accessors
