@@ -23,6 +23,7 @@ public class Pawn extends Piece {
     /**
      * What a pawn may become on reaching the far rank.
      */
+    // must use when the pawn moves
     private static final PieceType[] PROMOTION_CHOICES = { PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT };
 
     public Pawn(Color color) {
@@ -32,21 +33,38 @@ public class Pawn extends Piece {
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
         List<Move> moves = new ArrayList<>();
+
         // possible ways the Pawn can move
         final int direction = color() == Color.WHITE ? 1 : -1;
         final int oneStepRank = from.rank() + direction;
         final int twoStepRank = from.rank() + direction * 2;
         boolean onStartingRank = (color() == Color.WHITE && from.rank() == 1) || (color() == Color.BLACK && from.rank() == 6);
+
         // make sure types match
         Position oneStep = new Position(from.file(), oneStepRank);
-        Position twoStep = new Position(from.file(), twoStepRank);
+
         // can only move one step ONCE
         if (board.isEmpty(oneStep)) {
-            moves.add(Move.quiet(from, oneStep, this));
-            if (onStartingRank && board.isEmpty(twoStep)) {
-                moves.add(Move.quiet(from, twoStep, this));
+
+            // can promote via one step
+            boolean promotes = (color() == Color.WHITE && oneStep.rank() == 7) || (color() == Color.BLACK && oneStep.rank() == 0);
+
+            if (promotes) {
+                for (PieceType promotion : PROMOTION_CHOICES) {
+                    moves.add(Move.promotion(from, oneStep, this, null, promotion));
+                }
+            } else {
+                moves.add(Move.quiet(from, oneStep, this));
+            }
+
+            if (onStartingRank) {
+                Position twoStep = new Position(from.file(), twoStepRank);
+                if (board.isEmpty(twoStep)) {
+                    moves.add(Move.quiet(from, twoStep, this));
+                }
             }
         }
+
         // consider diagonal moves
         for (int fileDelta : new int[] { -1, 1 }) {
             int targetFile = from.file() + fileDelta;
@@ -76,6 +94,23 @@ public class Pawn extends Piece {
      */
     @Override
     public boolean attacks(Board board, Position from, Position target) {
-        throw new UnsupportedOperationException("M2: implement Pawn.attacks");
+        final int direction = color() == Color.WHITE ? 1 : -1;
+
+        // checks diagonally if it can capture
+        for (int fileDelta : new int[] { -1, 1 }) {
+            int targetFile = from.file() + fileDelta;
+            int targetRank = from.rank() + direction;
+
+            if (!Position.isOnBoard(targetFile, targetRank)) {
+                continue;
+            }
+
+            Position attackSquare = new Position(targetFile, targetRank);
+
+            if (attackSquare.equals(target)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
