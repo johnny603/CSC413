@@ -43,7 +43,11 @@ public class Game {
 
     // §2's loop, for sideToMove
     public List<Move> legalMoves() {
-        throw new UnsupportedOperationException("M3: Not implemented yet");
+        List<Move> moves = new ArrayList<>();
+        for (Position from : board.positionsOf(sideToMove)) {
+            moves.addAll(board.pieceAt(from).pseudoLegalMoves(board, from));
+        }
+        return moves;
     }
 
     public Optional<Move> findLegalMove(String notation) {
