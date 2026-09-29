@@ -4,6 +4,7 @@ import edu.sfsu.csc413.chess.factory.BoardFactory;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
+import edu.sfsu.csc413.chess.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,13 @@ import java.util.Optional;
  */
 public class Game {
 
+    // has-a board
     private final Board board;
 
+    // has-a move history
     private final List<Move> history = new ArrayList<>();
 
+    // has-a side to move
     private Color sideToMove;
 
     /**
