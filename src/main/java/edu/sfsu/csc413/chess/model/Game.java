@@ -27,7 +27,7 @@ public class Game {
 
     // defined in Board class (2d array)
     public Board board() {
-        throw new UnsupportedOperationException("M3: Not implemented yet");
+        return board;
     }
 
     // order defined in color class, do not need to here
