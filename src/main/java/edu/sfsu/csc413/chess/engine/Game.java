@@ -92,7 +92,17 @@ public class Game {
      * with that case.
      */
     public Optional<Move> findLegalMove(String notation) {
-        throw new UnsupportedOperationException("M3: implement Game.findLegalMove");
+        // check the shape of the string
+        if (notation.length() != 4 && notation.length() != 5) {
+            return Optional.empty();
+        }
+        // compare move with its toString using .equals()
+        for (Move move : legalMoves()) {
+            if (move.toString().equals(notation)) {
+                return Optional.of(move);
+            }
+        }
+        return Optional.empty();
     }
 
     /**
