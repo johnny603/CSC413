@@ -38,7 +38,7 @@ public class Game {
 
     // defined in Moves class using the List interface
     public List<Move> history() {
-        throw new UnsupportedOperationException("M3: Not implemented yet");
+        return List.copyOf(history);
     }
 
     // §2's loop, for sideToMove
