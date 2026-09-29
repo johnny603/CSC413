@@ -43,6 +43,12 @@ public class Board {
         return positions;
     }
 
+    // return added move to list
+    public void apply(Move move) {
+        List<Move> moves = new ArrayList<>();
+        moves.add(move);
+    }
+
     // One-line dump, for debugging
     @Override
     public String toString() {
