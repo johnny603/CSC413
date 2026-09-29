@@ -32,7 +32,7 @@ public class Game {
 
     // order defined in color class, do not need to here
     public Color sideToMove() {
-        throw new UnsupportedOperationException("M3: Not implemented yet");
+        return sideToMove;
     }
 
 
