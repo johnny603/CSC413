@@ -49,6 +49,12 @@ public class Board {
         moves.add(move);
     }
 
+    // return removed move from the list
+    public void undo(Move move) {
+        List<Move> moves = new ArrayList<>();
+        moves.remove(move);
+    }
+
     // One-line dump, for debugging
     @Override
     public String toString() {
