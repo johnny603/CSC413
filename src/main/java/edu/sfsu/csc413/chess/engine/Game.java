@@ -113,7 +113,12 @@ public class Game {
      *         {@link #legalMoves()}
      */
     public void play(Move move) {
-        throw new UnsupportedOperationException("M3: implement Game.play");
+        if (!legalMoves().contains(move)) {
+            throw new IllegalArgumentException("Illegal move: " + move);
+        }
+        board.apply(move);
+        history.add(move);
+        sideToMove = sideToMove.opposite();
     }
 
     /**

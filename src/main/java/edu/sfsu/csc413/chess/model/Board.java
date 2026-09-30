@@ -43,16 +43,21 @@ public class Board {
         return positions;
     }
 
+    // Game modifies the Move list, not the Board
     // return added move to list
     public void apply(Move move) {
-        List<Move> moves = new ArrayList<>();
-        moves.add(move);
+        place(move.from(), null);
+        place(move.to(), move.moved());
     }
 
     // return removed move from the list
     public void undo(Move move) {
-        List<Move> moves = new ArrayList<>();
-        moves.remove(move);
+        place(move.from(), null);
+        place(move.to(), move.moved());
+
+        if (move.isCapture()) {
+            place(move.to(), move.captured());
+        }
     }
 
     // One-line dump, for debugging
