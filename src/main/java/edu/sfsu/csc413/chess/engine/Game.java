@@ -127,7 +127,23 @@ public class Game {
      * <p>Undo costs us almost nothing because {@link Move} already records what
      * was captured. In Week 10 this becomes the Command pattern proper.
      */
+    // get the last move using the list interface
+    // then remove it
     public Optional<Move> undoLastMove() {
-        throw new UnsupportedOperationException("M3: implement Game.undoLastMove");
+        // check if the history list is empty
+        if (history.isEmpty()) {
+            return Optional.empty();
+        }
+
+        // get the last move and remove it from history
+        Move move = history.get(history.size() - 1);
+        history.remove(history.size() - 1);
+
+        // undo move from board and return to opposite color
+        board.undo(move);
+        sideToMove = sideToMove.opposite();
+
+        // return the move undone using the return type
+        return Optional.of(move);
     }
 }

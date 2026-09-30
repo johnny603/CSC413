@@ -44,16 +44,16 @@ public class Board {
     }
 
     // Game modifies the Move list, not the Board
-    // return added move to list
+    // apply a moved piece
     public void apply(Move move) {
         place(move.from(), null);
         place(move.to(), move.moved());
     }
 
-    // return removed move from the list
+    // restore a moved piece
     public void undo(Move move) {
-        place(move.from(), null);
-        place(move.to(), move.moved());
+        place(move.to(), null);
+        place(move.from(), move.moved());
 
         if (move.isCapture()) {
             place(move.to(), move.captured());
