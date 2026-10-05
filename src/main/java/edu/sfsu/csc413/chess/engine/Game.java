@@ -74,11 +74,10 @@ public class Game {
      * safety arrives in M5 and tightens this method without changing its name
      * or its callers.
      */
+    // call the moveGenerator
     public List<Move> legalMoves() {
-        List<Move> moves = new ArrayList<>();
-        for (Position from : board.positionsOf(sideToMove)) {
-            moves.addAll(board.pieceAt(from).pseudoLegalMoves(board, from));
-        }
+        List<Move> moves = MoveGenerator.pseudoLegalMoves(board, sideToMove);
+
         return moves;
     }
 

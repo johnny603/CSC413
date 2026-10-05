@@ -3,8 +3,10 @@ package edu.sfsu.csc413.chess.engine;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
+import edu.sfsu.csc413.chess.model.Position;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Generates the moves a side may play in a given position.
@@ -53,7 +55,12 @@ public final class MoveGenerator {
      * both in {@code engine}, may call it. A view that wants the moves asks
      * {@code Game}.
      */
+    // Cut and paste loop from Game.legalMoves
     static List<Move> pseudoLegalMoves(Board board, Color color) {
-        throw new UnsupportedOperationException("M4: implement MoveGenerator.pseudoLegalMoves");
+        List<Move> moves = new ArrayList<>();
+        for (Position from : board.positionsOf(color)) {
+            moves.addAll(board.pieceAt(from).pseudoLegalMoves(board, from));
+        }
+        return moves;
     }
 }
