@@ -4,7 +4,6 @@ import edu.sfsu.csc413.chess.factory.BoardFactory;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
-import edu.sfsu.csc413.chess.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +75,7 @@ public class Game {
      */
     // call the moveGenerator
     public List<Move> legalMoves() {
-        List<Move> moves = MoveGenerator.pseudoLegalMoves(board, sideToMove);
-        return moves;
+        return MoveGenerator.pseudoLegalMoves(board, sideToMove);
     }
 
     /**
