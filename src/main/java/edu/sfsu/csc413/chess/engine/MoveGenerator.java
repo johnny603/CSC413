@@ -40,8 +40,9 @@ public final class MoveGenerator {
      * and only here. {@code Game.legalMoves()} calls this and does not change
      * when it tightens.
      */
+    // So for m4, pseudolegalmoves = legalmoves
     public static List<Move> legalMoves(Board board, Color color) {
-        throw new UnsupportedOperationException("M4: implement MoveGenerator.legalMoves");
+        return pseudoLegalMoves(board, color);
     }
 
     /**

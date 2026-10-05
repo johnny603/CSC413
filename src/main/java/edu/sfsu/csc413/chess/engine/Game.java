@@ -77,7 +77,6 @@ public class Game {
     // call the moveGenerator
     public List<Move> legalMoves() {
         List<Move> moves = MoveGenerator.pseudoLegalMoves(board, sideToMove);
-
         return moves;
     }
 
