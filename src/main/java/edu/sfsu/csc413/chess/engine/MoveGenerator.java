@@ -76,9 +76,22 @@ public final class MoveGenerator {
      * and only here. {@code Game.legalMoves()} calls this and does not change
      * when it tightens.
      */
-    // So for m4, pseudolegalmoves = legalmoves
+    // m5 accounts for isAttacked, isInCheck, and kingPosition in the filter
     public static List<Move> legalMoves(Board board, Color color) {
-        return pseudoLegalMoves(board, color);
+        List<Move> legalMoves = new ArrayList<>();
+        // for each legal move
+        for (Move move : pseudoLegalMoves(board, color)) {
+            board.apply(move);
+            boolean kingInCheck = isInCheck(board, color);
+            // board has been modified since this is the filter
+            board.undo(move);
+
+            // this removes a legalmove it it makes a king in check
+            if (!kingInCheck) {
+                legalMoves.add(move);
+            }
+        }
+        return legalMoves;
     }
 
     /**
