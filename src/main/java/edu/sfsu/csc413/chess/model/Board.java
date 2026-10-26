@@ -17,7 +17,15 @@ public class Board {
      * @return
      */
     public Position kingPosition(Color color) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // for each position
+        for (Position position : positionsOf(color)) {
+            Piece piece = pieceAt(position);
+            // check via enum
+            if (piece.type() == PieceType.KING) {
+                return position;
+            }
+        }
+        return null;
     }
 
 
