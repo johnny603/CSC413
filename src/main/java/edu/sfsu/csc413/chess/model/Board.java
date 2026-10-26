@@ -11,6 +11,16 @@ public class Board {
     public Board() {
     }
 
+    /**
+     * board HAS-A king position, which is dictated by the color
+     * @param color
+     * @return
+     */
+    public Position kingPosition(Color color) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
     // What is here? null if nothing
     public Piece pieceAt(Position position) {
         return squares[position.file()][position.rank()];
