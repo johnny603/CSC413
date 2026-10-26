@@ -43,6 +43,17 @@ public final class MoveGenerator {
     }
 
     /**
+     * Asks each piece if if an attacker attacks a target
+     * @param board
+     * @param target
+     * @param attacker
+     * @return
+     */
+    public static boolean isAttacked(Board board, Position target, Color attacker) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
      * Every move {@code color} may legally play in the given position.
      *
      * <p>At M4 this is {@link #pseudoLegalMoves} unfiltered: the right colour
