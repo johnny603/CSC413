@@ -4,6 +4,7 @@ import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
 import edu.sfsu.csc413.chess.model.Position;
+import edu.sfsu.csc413.chess.model.Piece;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -50,7 +51,15 @@ public final class MoveGenerator {
      * @return
      */
     public static boolean isAttacked(Board board, Position target, Color attacker) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // for each position
+        for (Position from : board.positionsOf(attacker)) {
+            Piece piece = board.pieceAt(from);
+            // ask if piece can attack
+            if (piece.attacks(board, from, target)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
