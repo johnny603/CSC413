@@ -40,7 +40,13 @@ public final class MoveGenerator {
      * @return
      */
     public static boolean isInCheck(Board board, Color color) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // get the king's position from board
+        Position king = board.kingPosition(color);
+        if (king == null) {
+            return false;
+        }
+        // reuse isAttacked but for a king
+        return isAttacked(board, king, color.opposite());
     }
 
     /**
