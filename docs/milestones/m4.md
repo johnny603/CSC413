@@ -105,36 +105,30 @@ because M5's tests and, later, an AI will want it.
 
 The counts are what `./mvnw test` prints after each step.
 
-**1. `MoveGenerator.pseudoLegalMoves`.** Cut the loop out of
-`Game.legalMoves()` and paste it here, with two edits: `sideToMove` becomes
-the `color` parameter, and `board` is the parameter rather than the field.
-Add the imports the compiler asks for.
+**1. `MoveGenerator.pseudoLegalMoves`.** This is the generation loop from
+session 6 §3, the one M3 asked for in `Game.legalMoves()`. It walks every
+square that holds a piece of the given colour and collects that piece's
+pseudo-legal moves. Here it has no `this` to lean on: the board and the
+colour are parameters. If the loop already exists in your `Game`, move it,
+do not copy it. If it does not exist yet, write it here first.
 
 *Still `Errors: 6`.* Every test reaches `legalMoves` first, and that still
 throws. Nothing is green yet, and that is expected.
 
-**2. `MoveGenerator.legalMoves`.** One line:
-
-```java
-return pseudoLegalMoves(board, color);
-```
-
-This week "legal" and "pseudo-legal" are the same list. M5 puts the
-king-safety filter between them, in this method, and callers never notice.
+**2. `MoveGenerator.legalMoves`.** This week "legal" and "pseudo-legal" are
+the same list, so this method has nothing to add yet: it asks
+`pseudoLegalMoves` and returns the answer. One line. M5 puts the
+king-safety filter here, between the two, and callers never notice.
 
 *All six green: `Errors: 0`.* Including `gameAgreesWithTheGenerator`, which
-passes even though `Game` still has its own copy of the loop. Two copies of
-the same loop agree with each other. That is not done.
+passes even if `Game` still has its own copy of the loop. Two copies of
+the same loop agree with each other. Green is not done.
 
-**3. `Game.legalMoves()` delegates.** Replace its body with one line:
-
-```java
-return MoveGenerator.legalMoves(board, sideToMove);
-```
-
-Delete the loop. Delete the imports `Game` no longer needs; IntelliJ greys
-them out. Nothing else in `Game` changes: not a signature, not a field, not
-`play` or `undoLastMove`.
+**3. `Game.legalMoves()` asks instead of generating.** Its body becomes a
+single call to `MoveGenerator.legalMoves`, passing the game's board and its
+side to move. No loop remains in `Game`. Delete the imports `Game` no
+longer needs; IntelliJ greys them out. Nothing else in `Game` changes: not a
+signature, not a field, not `play` or `undoLastMove`.
 
 *Still `Errors: 0`.* A refactor that changes a test result was not a
 refactor.
@@ -143,6 +137,14 @@ refactor.
 by the loop and longer by one line. `MoveGenerator` should contain the loop
 once. If the loop appears anywhere twice, you copied when you should have
 moved.
+
+**If M3 is not finished.** M3 and M4 are open in the same week and they
+touch the same method. The M3 tests call `Game.legalMoves()` and do not
+care where the loop lives, so if you have not written it yet you may do
+steps 1 and 2 first and then write `Game.legalMoves()` as step 3 says,
+never putting the loop in `Game` at all. Either way, get M3's forty-two
+green before you tag `submit-m3`; M4 is a short piece of work on top of a
+green M3 and a long one on top of a red one.
 
 ---
 
@@ -204,7 +206,7 @@ agree. Your diff can.
 ## Common problems
 
 - **`legalMoves` green but `pseudoLegalMoves` still throws** — you wrote the
-  loop in `legalMoves` directly. Move it down; `legalMoves` is one line.
+  loop in `legalMoves` directly. Move it down; `legalMoves` only asks.
 - **`asksOnlyTheGivenColour` fails with 29** — the loop uses a colour of its
   own, or loops over both. It must ask `positionsOf(color)` for the parameter
   it was given.
