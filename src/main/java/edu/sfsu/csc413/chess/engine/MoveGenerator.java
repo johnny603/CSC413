@@ -33,6 +33,16 @@ public final class MoveGenerator {
     }
 
     /**
+     * Checks if the king is being attacked by another color
+     * @param board
+     * @param color
+     * @return
+     */
+    public static boolean isInCheck(Board board, Color color) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
      * Every move {@code color} may legally play in the given position.
      *
      * <p>At M4 this is {@link #pseudoLegalMoves} unfiltered: the right colour
