@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>The first five are M4's, unchanged; the filter must not break them. The
  * rest build positions from FEN, which is far easier to read than twenty
  * lines of {@code board.place(...)}. Each FEN has a comment saying what is
- * on the board.
+ * on the board. The last four arrive with M6 and ask how the game stands.
  */
 class MoveGeneratorTest {
 
@@ -81,7 +81,7 @@ class MoveGeneratorTest {
     @DisplayName("Game and MoveGenerator agree, before and after a move")
     void gameAgreesWithTheGenerator() {
         // Compared against boards built here, not game.board(), so this
-        // compiles whether board() returns a Board or a BoardView.
+        // compiles whether board() returns a Board or a ReadOnlyBoard.
         Game game = new Game();
         assertEquals(legal(BoardFactory.START_FEN, Color.WHITE), notations(game.legalMoves()));
 
@@ -222,5 +222,47 @@ class MoveGeneratorTest {
         MoveGenerator.legalMoves(board, Color.BLACK);
 
         assertEquals(before, board.toString(), "every move tried must be taken back");
+    }
+
+    @Test
+    @DisplayName("the opening position is in progress for both sides")
+    void openingIsInProgress() {
+        Board board = BoardFactory.standard();
+
+        assertEquals(GameStatus.IN_PROGRESS, MoveGenerator.status(board, Color.WHITE));
+        assertEquals(GameStatus.IN_PROGRESS, MoveGenerator.status(board, Color.BLACK));
+    }
+
+    @Test
+    @DisplayName("check with a way out is CHECK, and the game goes on")
+    void checkIsNotTheEnd() {
+        // The black rook on e8 checks the white king on e1, which can step aside.
+        Board board = BoardFactory.fromFen("4r2k/8/8/8/8/8/8/4K3");
+
+        assertEquals(GameStatus.CHECK, MoveGenerator.status(board, Color.WHITE));
+        assertFalse(GameStatus.CHECK.isGameOver());
+    }
+
+    @Test
+    @DisplayName("recognises Fool's Mate as checkmate")
+    void recognisesCheckmate() {
+        // After 1. f3 e5 2. g4 Qh4#. White is mated: the queen checks along
+        // the h4-e1 diagonal and nothing can block, capture, or run.
+        Board board = BoardFactory.fromFen(
+                "rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR");
+
+        assertEquals(GameStatus.CHECKMATE, MoveGenerator.status(board, Color.WHITE));
+        assertTrue(MoveGenerator.legalMoves(board, Color.WHITE).isEmpty());
+    }
+
+    @Test
+    @DisplayName("recognises stalemate: no legal move, but not in check")
+    void recognisesStalemate() {
+        // The black king on a8 is not attacked, yet every square it could reach
+        // is covered by the white queen on b6.
+        Board board = BoardFactory.fromFen("k7/8/1Q6/8/8/8/8/7K");
+
+        assertFalse(MoveGenerator.isInCheck(board, Color.BLACK));
+        assertEquals(GameStatus.STALEMATE, MoveGenerator.status(board, Color.BLACK));
     }
 }
