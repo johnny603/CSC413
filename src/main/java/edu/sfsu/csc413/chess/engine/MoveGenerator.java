@@ -95,6 +95,16 @@ public final class MoveGenerator {
     }
 
     /**
+     * Asks the game status in the engine, are we in check, what legal moves can we do?
+     * @param board
+     * @param sideToMove
+     * @return
+     */
+    public static GameStatus status(Board board, Color sideToMove) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
      * Every geometrically possible move for {@code color}, king safety aside.
      *
      * <p>This is the loop from session 6 §3 and M3's {@code Game.legalMoves()},
