@@ -164,7 +164,7 @@ step 4. Lifelines for the caller, `Game`, `MoveGenerator`, and `Board`; one
 `loop` fragment and the keep-or-drop decision as an `alt`.
 
 Draw your code, not the reference's. If your `Game` holds something the list
-above does not mention, draw it. If you added `BoardView` after M4, it belongs
+above does not mention, draw it. If you added `ReadOnlyBoard` after M4, it belongs
 in the class diagram, with the arrow that says who implements it and the
 arrow that says who returns it.
 

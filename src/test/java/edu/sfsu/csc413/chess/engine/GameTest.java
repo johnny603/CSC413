@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Tests for the game: turn order, history, and undo. */
+/** Tests for the game: turn order, history, undo, and how it ends. */
 class GameTest {
 
     /** Plays a sequence of moves given in algebraic notation. */
@@ -110,9 +110,22 @@ class GameTest {
     }
 
     @Test
+    @DisplayName("a mated game is over")
+    void gameOverOnCheckmate() {
+        // Fool's Mate: 1. f3 e5 2. g4 Qh4#
+        Game game = new Game();
+        play(game, "f2f3", "e7e5", "g2g4", "d8h4");
+
+        assertEquals(GameStatus.CHECKMATE, game.status());
+        assertTrue(game.isGameOver());
+        assertTrue(game.legalMoves().isEmpty());
+    }
+
+    @Test
     @DisplayName("a game can start from an arbitrary position")
     void startFromFen() {
         Game game = new Game(BoardFactory.fromFen("4k3/8/8/8/8/8/4P3/4K3"), Color.WHITE);
+        assertEquals(GameStatus.IN_PROGRESS, game.status());
 
         // Four king steps (e2 is blocked by its own pawn) plus the pawn's two
         // advances. The black king on e8 is too far away to matter.
