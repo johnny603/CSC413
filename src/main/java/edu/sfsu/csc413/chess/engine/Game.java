@@ -40,6 +40,23 @@ public class Game {
     }
 
     /**
+     * Asks the gamestatus for the status, which is an enum
+     * @return
+     */
+    public GameStatus status() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Checks for checkmate or stalemate in GameStatus
+     * @return
+     */
+    public boolean isGameOver() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    /**
      * Starts a game from a given position — used by tests and FEN loading.
      */
     public Game(Board board, Color sideToMove) {
