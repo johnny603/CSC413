@@ -43,8 +43,9 @@ public class Game {
      * Asks the gamestatus for the status, which is an enum
      * @return
      */
+    // Calls the MoveGenerator to retrieve status
     public GameStatus status() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return MoveGenerator.status(board, sideToMove);
     }
 
     /**
@@ -52,7 +53,7 @@ public class Game {
      * @return
      */
     public boolean isGameOver() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return status().isGameOver();
     }
 
 
@@ -92,7 +93,7 @@ public class Game {
      */
     // call the moveGenerator
     public List<Move> legalMoves() {
-        return MoveGenerator.pseudoLegalMoves(board, sideToMove);
+        return MoveGenerator.legalMoves(board, sideToMove);
     }
 
     /**
