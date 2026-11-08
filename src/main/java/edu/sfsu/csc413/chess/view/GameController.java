@@ -66,6 +66,21 @@ public class GameController {
      * each of the four actions does and what the player is told.
      */
     public void handle(PlayerAction action) {
-        throw new UnsupportedOperationException("M6: implement GameController.handle");
+        // switch between 4 actions, use a switch expression to avoid fallthrough
+        switch (action) {
+            case PlayerAction.Move move -> {
+
+            }
+            case PlayerAction.Undo undo -> {
+
+            }
+            case PlayerAction.ShowMoves showMoves -> {
+
+            }
+            case PlayerAction.Quit quit -> {
+                // retrieve from runLoop implementation
+                running = false;
+            }
+        }
     }
 }
