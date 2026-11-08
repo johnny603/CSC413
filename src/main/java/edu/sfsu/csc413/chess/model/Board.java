@@ -63,9 +63,21 @@ public class Board {
 
     // Game modifies the Move list, not the Board
     // apply a moved piece
+    // update this to add the promotion type
     public void apply(Move move) {
         place(move.from(), null);
-        place(move.to(), move.moved());
+        Piece piece = move.moved();
+
+        if (move.isPromotion()) {
+            piece = switch (move.promotesTo()) {
+                case QUEEN -> new Queen(piece.color());
+                case ROOK -> new Rook(piece.color());
+                case BISHOP -> new Bishop(piece.color());
+                case KNIGHT -> new Knight(piece.color());
+                default -> throw new IllegalArgumentException("Invalid promotion");
+            };
+        }
+        place(move.to(), piece);
     }
 
     // restore a moved piece

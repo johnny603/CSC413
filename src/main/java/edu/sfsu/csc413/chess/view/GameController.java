@@ -1,5 +1,8 @@
+// can only have one package
 package edu.sfsu.csc413.chess.view;
 
+
+import edu.sfsu.csc413.chess.engine.GameStatus;
 import edu.sfsu.csc413.chess.engine.Game;
 
 /**
@@ -69,18 +72,70 @@ public class GameController {
         // switch between 4 actions, use a switch expression to avoid fallthrough
         switch (action) {
             case PlayerAction.Move move -> {
+                // get notation
+                String notation = move.notation().trim().toLowerCase();
+                var legalMove = game.findLegalMove(notation);
 
+                // Handle promotion
+                if (legalMove.isEmpty() && notation.length() == 4) {
+                    String promotionMove = notation;
+                    boolean isPromotion = game.legalMoves().stream()
+                            .anyMatch(m -> m.isPromotion() && m.toString().
+                                    startsWith(promotionMove));
+                    if (isPromotion) {
+                        notation += Character.toLowerCase(view
+                                .promotionChoice(game).symbol());
+                        legalMove = game.findLegalMove(notation);
+                    }
+
+
+                }
+                // Play or report move
+                if (legalMove.isPresent()) {
+                    game.play(legalMove.get());
+                } else {
+                    view.showMessage("Not a legal move: '" + notation + "'.");
+                }
             }
+
             case PlayerAction.Undo undo -> {
-
+                if (game.undoLastMove().isEmpty()) {
+                    view.showMessage("Nothing to undo.");
+                }
             }
+
             case PlayerAction.ShowMoves showMoves -> {
+                var moves = game.legalMoves().stream()
+                        .map(Object::toString)
+                        .sorted()
+                        .toList();
+
+                view.showMessage(moves.size() + " legal moves: " +
+                        String.join(" ", moves));
 
             }
+
             case PlayerAction.Quit quit -> {
-                // retrieve from runLoop implementation
+                view.showMessage("Goodbye.");
                 running = false;
+                view.close();
+                return;
             }
+        }
+        // shared among non-quit actions
+        view.render(game);
+
+        // checks for game over in the controller
+        if (game.isGameOver()) {
+            if (game.status() == GameStatus.CHECKMATE) {
+                view.showMessage("Checkmate. " +
+                        game.sideToMove().opposite() + " wins.");
+            }
+            else {
+                view.showMessage("Stalemate.");
+            }
+            running = false;
+            view.close();
         }
     }
 }
