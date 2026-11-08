@@ -101,7 +101,28 @@ public final class MoveGenerator {
      * @return
      */
     public static GameStatus status(Board board, Color sideToMove) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // status checks for boolean values
+        boolean isInCheck = isInCheck(board, sideToMove);
+        boolean hasLegalMoves = !legalMoves(board, sideToMove).isEmpty();
+
+        // Four states, four statuses, as in the m6 handout table
+        if (!isInCheck && hasLegalMoves) {
+            return GameStatus.IN_PROGRESS;
+        }
+
+        if (isInCheck && hasLegalMoves) {
+            return GameStatus.CHECK;
+        }
+
+        if (isInCheck && !hasLegalMoves) {
+            return GameStatus.CHECKMATE;
+        }
+
+        if (!isInCheck && !hasLegalMoves) {
+            return GameStatus.STALEMATE;
+        }
+
+        throw new IllegalStateException("Unreachable Game Status");
     }
 
     /**
