@@ -35,7 +35,9 @@ public class GameController {
      * view with {@link BoardView#start}.
      */
     public void start() {
-        throw new UnsupportedOperationException("M6: implement GameController.start");
+       view.showMessage("Greetings from CSC413!");
+       view.render(game);
+       view.start(this);
     }
 
     /**
@@ -45,8 +47,15 @@ public class GameController {
      * quits or the game is over. A console view calls this from its
      * {@code start}; an event-driven view never calls it.
      */
+
+    // have a switch, we would want to have the game run first
+    private boolean running = true;
     public void runLoop() {
-        throw new UnsupportedOperationException("M6: implement GameController.runLoop");
+        // while the game is not over, run the game
+        while (running && !game.isGameOver()) {
+            PlayerAction action = view.nextAction(game);
+            handle(action);
+        }
     }
 
     /**
