@@ -1,9 +1,11 @@
 package edu.sfsu.csc413.chess;
 
-import edu.sfsu.csc413.chess.model.Board;
-import edu.sfsu.csc413.chess.factory.BoardFactory;
-import edu.sfsu.csc413.chess.view.TextBoardRenderer;
-import edu.sfsu.csc413.chess.view.PieceGlyphs;
+// import extra views if you create more
+import edu.sfsu.csc413.chess.engine.Game;
+import edu.sfsu.csc413.chess.view.BoardView;
+import edu.sfsu.csc413.chess.view.GameController;
+import edu.sfsu.csc413.chess.view.ConsoleView;
+import edu.sfsu.csc413.chess.view.EmojiView;
 
 /**
  * Entry point.
@@ -13,12 +15,23 @@ import edu.sfsu.csc413.chess.view.PieceGlyphs;
  */
 public final class Main {
 
-    public static void main(String[] args) {
-        Board board = BoardFactory.standard();
 
-        System.out.println(
-                new TextBoardRenderer(PieceGlyphs.LETTERS).render(board)
-        );
+    public static void main(String[] args) {
+        Game game = new Game();
+        BoardView view = chooseView(args);
+
+        GameController controller = new GameController(game, view);
+        controller.start();
+    }
+
+    // To add another view later, create a class that implements BoardView
+    // and add another command-line option here.
+    private static BoardView chooseView(String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("emoji")) {
+            return new EmojiView();
+        }
+
+        return new ConsoleView();
     }
 
     private Main() {
