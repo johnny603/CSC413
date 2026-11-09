@@ -189,10 +189,12 @@ Specific beats long: a file and line number shows you read the code.
 3. **Other view.** The command-line word that starts it.
 4. **Runs.** For each: the branch, the request you gave, word for word, and
    what you changed from the previous run.
-5. **`AGENTS.md`.** One rule you added or changed after a run, and what the
-   run did that made you change it.
-6. **Fixed or rejected.** At least three items from generated code, each with
-   a file and line: what it did, and what you did about it.
+5. **`AGENTS.md`.** One rule you added or changed, and why: something a run
+   did, or something you wanted to make sure a run wouldn't do.
+6. **Review.** Choose at least three places in the generated code that matter,
+   each with a file and line. For each: what it does, how you checked it, and
+   your decision (kept, changed, or rejected) and why. A well-checked "kept"
+   counts the same as a fix. Don't invent problems.
 7. **Comparison.** For the views you compared, with file and line:
    - Where does the state of a half-finished move (the selected square) live?
    - How does each view find out which moves are legal?
@@ -200,9 +202,11 @@ Specific beats long: a file and line number shows you read the code.
    - Which is easier to change, and why? Which did you keep?
 8. **Applied.** What you took, from whom or from which run, and where it is in
    your code.
-9. **A bug you chased.** One real bug in a view. The symptom; the evidence
-   (the stack trace frame you opened, the breakpoint and what it showed, or
-   the log line); the cause; the fix.
+9. **Debugger evidence.** If a view had a real bug, describe it: the symptom,
+   the evidence (the stack trace frame you opened, the breakpoint and what it
+   showed, or the log line), the cause, and the fix. If you found none, set a
+   breakpoint in the click handler, follow one move through it, and report
+   what you predicted and which values you saw.
 10. **By hand.** The commit, and what you had to read to make the change.
 
 ---
