@@ -20,3 +20,26 @@
 10. I read the handout and the emoji view to make the scaffold
 
 --
+
+### Iteration 1
+1. Alone
+2. Cursor model Grok 4.7
+3. The model built the views from the scaffold
+4. Prompt:
+Add views. I want to play by clicking a piece and then clicking the square to move it to. Show whose turn it is and messages like check or illegal moves. Follow AGENTS.md.
+6. First I manually checked main BoardView, which had a switch expression taking in string values used to run a specific view. I checked all using the maven wrapper test, which all passed. I did further tests with this flow:
+./mvnw -q compile
+java -cp target/classes edu.sfsu.csc413.chess.Main
+java -cp target/classes edu.sfsu.csc413.chess.Main name
+7. Swings promotion always defaults to queen, which is acceptable
+Issues:
+- 3dview is not 3D in the terminal, but is just a tilted 2d view
+- Borderedview is just making a border across the perimeter
+
+--
+
+### Iteration 2
+
+
+
+
