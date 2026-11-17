@@ -39,6 +39,15 @@ Issues:
 --
 
 ### Iteration 2
+- Edited ComsoleView and BorderedView
+- Fixed an issue where the border was just on the perimeter, now it is on intersections
+- Commented both files to explain logic
+- I used conditional breakpoints in BorderedView where I check if the white queen is not in the expected square
+- Ex: Breakpoint on line 59, with condition file == 3 && rank == 7
+
+--
+
+## Iteration 3
 
 
 
