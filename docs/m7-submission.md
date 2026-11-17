@@ -47,7 +47,14 @@ Issues:
 
 --
 
-## Iteration 3
+### Iteration 3
+- Removed 3DView for the sake of time
+- Tested all other views through compilation with Main
+- Maven tests still all pass
+- Final commit before label commit and tag
+
+--
+
 
 
 

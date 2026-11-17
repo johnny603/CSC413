@@ -38,7 +38,6 @@ public final class Main {
             case "swing" -> new SwingView();
             case "bordered" -> new BorderedView();
             case "glyph" -> new NewGlyph();
-            case "3d" -> new ThreeDView();
             case "http" -> new HttpView();
             default -> new ConsoleView();
         };
