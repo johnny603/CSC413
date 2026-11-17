@@ -1,4 +1,4 @@
-6. package edu.sfsu.csc413.chess.view;
+package edu.sfsu.csc413.chess.view;
 
 import edu.sfsu.csc413.chess.engine.Game;
 import edu.sfsu.csc413.chess.model.Color;
